@@ -3,7 +3,6 @@ import InputPassword from '../../../components/inputPassword/inputPassword';
 import { SyntheticEvent, useState } from "react";
 import { tpDataRegister, tpValidateRegister } from "../../../types/tpDataRegister/tpDataRegister";
 import { setData } from "../../../services/setData";
-import { tpNote } from "../../../types/tpNote/tpNote";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -30,6 +29,8 @@ const Register = () => {
         email: false,
         password: false,
     })
+
+    
 
     const handlerNavigate = (arg: string) => {
         navigate(arg)
@@ -59,12 +60,6 @@ const Register = () => {
         }
     }
 
-    const addNote = (newNote: tpNote) => {
-        setDataRegister((prev: tpDataRegister) => ({
-            ...prev,
-            notes: [...prev.notes, newNote]
-        }))
-    }
 
 
     const handlerSubmit = (event: SyntheticEvent) => {
@@ -80,7 +75,7 @@ const Register = () => {
         if (allInputsValid && validateConfirmPassword) {
             if (dataRegister.password === confirmPassword) {
                 if (setData(dataRegister)) {
-                    navigate('/home/inicio', { state: { dataRegister, addNote } })
+                    navigate('/home/inicio', { state: { dataRegister } })
                 } else {
                     console.log('No funciono')
                 }
@@ -90,6 +85,8 @@ const Register = () => {
         } else {
             console.log('No funciono')
         }
+
+        
     }
 
 

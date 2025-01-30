@@ -10,12 +10,8 @@ export const getData = (user: tpDataLogin) => {
 
     if (dataUser) {
         const dataUserObj = JSON.parse(dataUser)
-
         emailUser = { ...dataUserObj.find((item: Partial<{ email: string }>) => item.email === user.email) }
-        
     }
-    console.log(user)
-
     if (emailUser) {
         if (emailUser.password === user.password) {
             return true

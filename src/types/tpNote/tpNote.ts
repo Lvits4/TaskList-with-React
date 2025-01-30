@@ -2,8 +2,10 @@
 
 
 export type tpNote = {
+    id: number,
     title: string,
     description: string,
+    background: string
 }
 
 

@@ -1,4 +1,12 @@
-const CardWelcome = () => {
+import { FC } from "react";
+import { tpDataRegister } from "../../types/tpDataRegister/tpDataRegister";
+
+interface CardWelcomeProps{
+  dataRegister: tpDataRegister
+}
+
+
+const CardWelcome:FC<CardWelcomeProps> = ({dataRegister}) => {
   return (
     <div className="bg-white w-[35rem] h-[20rem] rounded-xl flex relative items-center p-4">
       <img
@@ -7,7 +15,7 @@ const CardWelcome = () => {
       ></img>
       <div className="flex flex-col indent-8">
         <h1 className="text-gray-400 text-5xl">Hello,</h1>
-        <h1 className="text-gray-400 text-5xl">username!</h1>
+        <h1 className="text-gray-400 text-5xl">{dataRegister.name}!</h1>
       </div>
     </div>
   );
