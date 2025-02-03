@@ -33,6 +33,7 @@ const Inicio = () => {
         description: false,
     })
 
+
     useEffect(() => {
         const data = getDataSession('users') as unknown as Partial<{notes:[], name:string}>
         let arrNotes: [] = []
@@ -58,6 +59,8 @@ const Inicio = () => {
     return <div className="bg-[#E2D2FE] w-full h-full flex items-center justify-center relative overflow-y-scroll">
         <SearchInputReactPrime />
         {showModal && <FormAddNote
+        backgroundImage={backgroundImage}
+        setBackgroundImage={setBackgroundImage}
             notes={notes}
             setNotes={setNotes}
             validateNewNote={validateNewNote}
@@ -69,7 +72,7 @@ const Inicio = () => {
                 {notes?.length === 0 ? <CardWelcome nameUser={nameUser} /> : null}
             </div>
 
-            <div className="flex w-[85%] absolute top-25 pb-7 flex-wrap gap-8">
+            <div className="flex w-full px-8 justify-center absolute top-25 pb-7 flex-wrap gap-8">
                 {notes.map((item) => {
                     
                     const { id } = item

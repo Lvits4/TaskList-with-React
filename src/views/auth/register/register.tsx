@@ -84,7 +84,7 @@ const Register = () => {
         
     }
 
-    return <form className="bg-[#E2D2FE] w-[25rem] rounded-xl p-10 shadow-2xl flex flex-col items-center justify-center gap-4" onSubmit={handlerSubmit}>
+    return <form className="bg-[#E2D2FE] w-[90%] sm:w-[60%] md:w-[50%] lg:w-[40%] xl:w-[27%] rounded-xl p-10 shadow-2xl flex flex-col items-center justify-center gap-4" onSubmit={handlerSubmit}>
         <h1 className="text-3xl text-gray-500 w-full text-center mb-4">Sing up</h1>
         <InputText keyfilter="alpha" placeholder="Name" className='bg-white text-gray-500 rounded-lg h-10 p-2 w-full focus:outline-none' onChange={(e) => handlerChange('name', e.target.value)} />
         <InputText keyfilter="email" placeholder="Email" className='bg-white text-gray-500 rounded-lg h-10 p-2 w-full focus:outline-none' onChange={(e) => handlerChange('email', e.target.value)} />
@@ -94,7 +94,7 @@ const Register = () => {
             <span>Ya tienes cuenta?</span>
             <span className="text-blue-500 hover:text-blue-600" onClick={() => handlerNavigate('/login')}>Inicia sesión aquí</span>
         </div>
-        <button className='bg-[#9c7cd4] w-full mt-8 text-gray-200 px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#8669b8]'>Register</button>
+        <button className='bg-[#9c7cd4] w-full mt-8 text-white px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#8669b8]'>Register</button>
 
     </form>
 }

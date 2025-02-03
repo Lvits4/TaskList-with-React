@@ -9,7 +9,7 @@ interface CarouselBackgroundProps {
 
 
 const CarouselBackground:FC<CarouselBackgroundProps> = ({handlerBackgroundImage}) => {
-    return <div className="flex w-[80%] justify-between items-center">
+    return <div className="flex w-[100%] md:w-[80%] lg:w-full justify-between items-center">
         <Prev className="w-8 h-8 text-white hover:cursor-pointer"/>
         {dataCarouselBackground.map((url: string, index: number) => {
             return <div key={index} className="bg-[#ffffff] bg-center bg-[length:100%_100%] w-16 h-16 rounded-lg hover:cursor-pointer" style={{ backgroundImage: `url(${url})` }} onClick={()=>handlerBackgroundImage(url)}></div>

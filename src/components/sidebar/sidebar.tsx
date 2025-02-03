@@ -5,6 +5,7 @@ import { MdClose } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
 import { MdDeleteOutline as Delete } from "react-icons/md";
 import { getDataLocal } from "../../services/getDataLocal";
+import { getDataSession } from "../../services/getDataSession";
 
 
 
@@ -118,24 +119,24 @@ const Sidebar: FC<SidebarProps> = ({
 
 
 
-    return <aside className=" right-0  h-full fixed bg-[#B49BE0] w-sm shadow-2xl z-10">
+    return <aside className="right-0 p-8 h-full fixed bg-[#B49BE0] w-[80%] sm:w-[50%] lg:w-[30%] shadow-2xl z-10">
         <form className="w-full h-full flex flex-col justify-center items-center gap-4" onSubmit={handlerSubmit}>
             <div className="flex absolute right-10 top-20 gap-2">
                 <MdClose
-                    className="absolute right-0 top-[-2rem] text-white w-7 h-7 hover:cursor-pointer"
+                    className="absolute right-[-0.5rem] top-[-4.5rem] text-white w-7 h-7 hover:cursor-pointer"
                     onClick={handlerHiddenSidebar} />
             </div>
-            <input style={{ backgroundImage: `url(${backgroundImage})` }} className="bg-white w-[80%] rounded-lg h-9 focus:outline-none px-5 placeholder:text-xl text-gray-500"
+            <input style={{ backgroundImage: `url(${backgroundImage})` }} className="bg-white w-full rounded-lg h-9 focus:outline-none px-5 placeholder:text-xl text-gray-500"
                 value={editNote.title} onChange={(e) => handlerChange('title', e.target.value)}></input>
             <textarea style={{ backgroundImage: `url(${backgroundImage})` }}
-                className="bg-white w-[80%] rounded-lg h-[20rem] p-5 focus:outline-none placeholder:text-xl pt-4 text-gray-500 resize-none" value={editNote.description} onChange={(e) => handlerChange('description', e.target.value)}></textarea>
+                className="bg-white w-full rounded-lg h-[20rem] p-5 focus:outline-none placeholder:text-xl pt-4 text-gray-500 resize-none" value={editNote.description} onChange={(e) => handlerChange('description', e.target.value)}></textarea>
             <CarouselBackground handlerBackgroundImage={handlerBackgroundImage} />
             <div className="flex gap-6 justify-center w-full items-center text-white mt-4">
-                <div className='flex items-center gap-2 bg-[#E2D2FE] px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#9c7cd4]'>
+                <div className='flex justify-center w-[40%] items-center gap-2 bg-[#E2D2FE] px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#9c7cd4]'>
                     <Delete className="text-xl" />
                     <button className='hover:cursor-pointer' onClick={handlerDelete}>Borrar</button>
                 </div>
-                <div className='flex items-center gap-2 bg-[#E2D2FE] px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#9c7cd4]'>
+                <div className='flex justify-center w-[40%] items-center gap-2 bg-[#E2D2FE] px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#9c7cd4]'>
                     <FaCheck className="text-xl" />
                     <button className='hover:cursor-pointer' type="submit">Guardar</button>
                 </div>

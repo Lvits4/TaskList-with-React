@@ -54,12 +54,9 @@ const Login = () => {
         } else {
             console.log('No funciono')
         }
-
-        console.log(dataLogin)
-        console.log(allInputsValidate)
     }
 
-    return <form className="bg-[#E2D2FE] w-[25rem] rounded-xl p-10 shadow-2xl flex flex-col items-center justify-center gap-4" onSubmit={handlerSubmit}>
+    return <form className="bg-[#E2D2FE] w-[90%] sm:w-[60%] md:w-[50%] lg:w-[40%] xl:w-[27%] rounded-xl p-10 shadow-2xl flex flex-col items-center justify-center gap-4" onSubmit={handlerSubmit}>
         <h1 className="text-3xl text-gray-500 w-full text-center mb-4">Welcome to Task List</h1>
         <InputText keyfilter="email" placeholder="Email" className='bg-white text-gray-500 rounded-lg h-10 p-2 w-full focus:outline-none' onChange={(e) => handlerChange('email', e.target.value)} />
         <InputPassword placeholder='Password' handlerChange={(arg) => handlerChange('password', arg)} />
@@ -67,7 +64,7 @@ const Login = () => {
             <span>Ya tienes cuenta?</span>
             <span className="text-blue-500 hover:text-blue-600" onClick={() => handlerNavigate('/register')}>Regístrate aquí</span>
         </div>
-        <button className='bg-[#9c7cd4] w-full mt-8 text-gray-200 px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#8669b8]'>Login</button>
+        <button className='bg-[#9c7cd4] w-full mt-8 text-white px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#8669b8]'>Login</button>
 
     </form>
 }
