@@ -1,13 +1,13 @@
-import { SyntheticEvent, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import BtnOpenModal from "../../../components/btnOpenModal/btnOpenModal"
 import FormAddNote from "../../../components/formAddNote/formAddNote"
 import SearchInputReactPrime from "../../../components/searchInput/searchInput"
 import { tpNote, tpValidateNote } from "../../../types/tpNote/tpNote"
-import { setNote } from "../../../services/setNote"
 import { useLocation } from "react-router-dom"
 import CardNotes from "../../../components/cardNotes/cardNotes"
 import CardWelcome from "../../../components/cardWelcome/cardWelcome"
 import Sidebar from "../../../components/sidebar/sidebar"
+import { getDataSession } from "../../../services/getDataSession"
 
 
 
@@ -15,111 +15,85 @@ import Sidebar from "../../../components/sidebar/sidebar"
 
 const Inicio = () => {
 
-    const location = useLocation();
-    const { dataRegister } = location.state || {}
+
     const [showModal, setShowModal] = useState<boolean>(false)
     const [showSidebar, setShowSidebar] = useState<boolean>(false)
+    const [nameUser, setNameUser] = useState<string>('')
+    const [backgroundImage, setBackgroundImage] = useState<string>('')
     const [notes, setNotes] = useState<tpNote[]>([]);
-
-    const [newNote, setNewNote] = useState<tpNote>({
+    const [editNote, setEditNote] = useState<tpNote>({
         id: 0,
         title: '',
         description: '',
         background: ''
     })
+
     const [validateNewNote, setValidateNewNote] = useState<tpValidateNote>({
         title: false,
         description: false,
     })
 
     useEffect(() => {
-        const dataUser = localStorage.getItem('users')
+        const data = getDataSession('users') as unknown as Partial<{notes:[], name:string}>
+        let arrNotes: [] = []
+        let nameUser: string = ''
 
-        if (dataUser) {
-            const dataNotesObj = JSON.parse(dataUser)
-            console.log('las notas extraidas de la localSotrage',dataNotesObj)
-
-            if (dataNotesObj.length > 0 ) {
-                setNewNote(dataNotesObj[0]); 
+            if (data ) {
+                arrNotes = data.notes ?? []
+                nameUser = data.name ?? ''
+                setNameUser(nameUser)
+                arrNotes ? setNotes(arrNotes) : null
             } else {
-                console.log("No existe nota");
+                console.log("No hay notas válidas en el arreglo.");
             }
-        }
 
-    }, [])
-
-
-    const handlerAcept = (event: SyntheticEvent) => {
-        event.preventDefault()
-
-        const allInputsValid = Object.keys(validateNewNote).every((item: string) => {
-            const key = item as keyof tpValidateNote;
-
-            return validateNewNote[key];
-        });
+    }, [notes.length, showModal, showSidebar, backgroundImage])
 
 
-        if (allInputsValid) {
-            setNote(dataRegister, newNote)
-            setShowModal(false)
-            setNotes((prev) => [...prev, newNote]);
-        } else {
-            console.log('No funciono')
-        }
+    const filterNotes = (id: number) => {
+        const item = notes.find((item: Partial<{ id: number }>) => item.id === id)
+        item ? setEditNote(item) : null
     }
 
-    const handlerShowModal = () => {
-        setShowModal(!showModal)
-    }
-
-    const handlerHiddenModal = () => {
-        setShowModal(false)
-    }
-
-    const handlerShowSideBar = () => {
-        setShowSidebar(!showSidebar)
-    }
-
-    const handlerHiddenSidebar = () => {
-        setShowSidebar(false)
-    }
-
-    const handlerChange = (key: keyof tpNote, arg: string) => {
-        setNewNote({ ...newNote, [key]: arg })
-
-        if (arg.trim() !== '') {
-            setValidateNewNote({ ...validateNewNote, [key]: true })
-
-        } else {
-            setValidateNewNote({ ...validateNewNote, [key]: false })
-
-        }
-
-        console.log(newNote)
-    }
-
-    
-
-
-    return <div className="bg-[#E2D2FE] w-full h-full flex items-center justify-center relative">
+    return <div className="bg-[#E2D2FE] w-full h-full flex items-center justify-center relative overflow-y-scroll">
         <SearchInputReactPrime />
-        {showModal && <FormAddNote handlerChange={handlerChange} handlerHiddenModal={handlerHiddenModal} handlerAcept={handlerAcept} />}
+        {showModal && <FormAddNote
+            notes={notes}
+            setNotes={setNotes}
+            validateNewNote={validateNewNote}
+            setValidateNewNote={setValidateNewNote}
+            setShowModal={setShowModal} />}
         <div className="w-full flex justify-center flex-wrap">
 
-             <div className="w-full flex justify-center">
-                {notes.length === 0 ? <CardWelcome dataRegister={dataRegister}/> : null}
-             </div>
-            
-            <div className="w-[85%] flex justify-start flex-wrap gap-8">
-            {notes.map((item, index) => (
-                <CardNotes key={index} newNote={item} handlerShowSideBar={handlerShowSideBar}/>
-            ))}
+            <div className="w-full flex justify-center">
+                {notes?.length === 0 ? <CardWelcome nameUser={nameUser} /> : null}
+            </div>
+
+            <div className="flex w-[85%] absolute top-25 pb-7 flex-wrap gap-8">
+                {notes.map((item) => {
+                    
+                    const { id } = item
+                    return <CardNotes
+                        setSelectedId={(arg) => filterNotes(arg)}
+                        key={id}
+                        id={id}
+                        title={item.title}
+                        description={item.description}
+                        background={item.background}
+                        setShowSidebar={setShowSidebar} />
+                })}
             </div>
         </div>
 
-        {showSidebar && <Sidebar newNote={newNote} handlerChange={handlerChange} handlerHiddenSidebar={handlerHiddenSidebar}/>}
+        {showSidebar && <Sidebar
+            notes={notes}
+            backgroundImage={backgroundImage}
+            setBackgroundImage={setBackgroundImage}
+            editNote={editNote}
+            setEditNote={setEditNote}
+            setShowSidebar={setShowSidebar} />}
 
-        <BtnOpenModal handlerClick={handlerShowModal} />
+        <BtnOpenModal showModal={showModal} setShowModal={setShowModal} />
 
 
 

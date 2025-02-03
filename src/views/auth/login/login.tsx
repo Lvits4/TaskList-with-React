@@ -3,7 +3,7 @@ import InputPassword from '../../../components/inputPassword/inputPassword';
 import { useNavigate } from 'react-router-dom';
 import { SyntheticEvent, useState } from 'react';
 import { tpDataLogin, tpValidateLogin } from '../../../types/tpDataLogin/tpDataLogin';
-import { getData } from '../../../services/getData';
+import { authUser } from '../../../services/authUser';
 
 
 
@@ -46,14 +46,17 @@ const Login = () => {
         })
 
         if (allInputsValidate) {
-            if (getData(dataLogin)) {
-                navigate('/home/inicio');
+            if (authUser('users', dataLogin)){
+                navigate('/home/inicio');        
             } else {
-                console.log('No funciono')
+                console.log('No funciono hhhhhh')
             }
         } else {
             console.log('No funciono')
         }
+
+        console.log(dataLogin)
+        console.log(allInputsValidate)
     }
 
     return <form className="bg-[#E2D2FE] w-[25rem] rounded-xl p-10 shadow-2xl flex flex-col items-center justify-center gap-4" onSubmit={handlerSubmit}>

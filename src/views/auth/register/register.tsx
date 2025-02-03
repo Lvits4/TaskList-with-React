@@ -2,8 +2,8 @@ import { InputText } from 'primereact/inputtext';
 import InputPassword from '../../../components/inputPassword/inputPassword';
 import { SyntheticEvent, useState } from "react";
 import { tpDataRegister, tpValidateRegister } from "../../../types/tpDataRegister/tpDataRegister";
-import { setData } from "../../../services/setData";
 import { useNavigate } from 'react-router-dom';
+import { setDataLocal } from '../../../services/setDataLocal';
 
 
 
@@ -15,22 +15,17 @@ const Register = () => {
         name: '',
         email: '',
         password: '',
-        id: Math.random(),
+        id: Math.random()*100,
         notes: []
     })
-
     const [confirmPassword, setConfirmPassword] = useState<string>('')
-
     const [validateConfirmPassword, setValidateConfirmPassword] = useState<boolean>(false)
-
-
     const [validateRegister, setValidateRegister] = useState<tpValidateRegister>({
         name: false,
         email: false,
         password: false,
     })
 
-    
 
     const handlerNavigate = (arg: string) => {
         navigate(arg)
@@ -61,7 +56,6 @@ const Register = () => {
     }
 
 
-
     const handlerSubmit = (event: SyntheticEvent) => {
         event.preventDefault()
 
@@ -71,11 +65,13 @@ const Register = () => {
             return validateRegister[key];
         });
 
-
+        
         if (allInputsValid && validateConfirmPassword) {
             if (dataRegister.password === confirmPassword) {
-                if (setData(dataRegister)) {
-                    navigate('/home/inicio', { state: { dataRegister } })
+                console.log('se guardo el register')
+                if (setDataLocal('users', dataRegister, 'user')) {
+                    sessionStorage.setItem('users', JSON.stringify(dataRegister))
+                    navigate('/home/inicio')
                 } else {
                     console.log('No funciono')
                 }
@@ -85,10 +81,8 @@ const Register = () => {
         } else {
             console.log('No funciono')
         }
-
         
     }
-
 
     return <form className="bg-[#E2D2FE] w-[25rem] rounded-xl p-10 shadow-2xl flex flex-col items-center justify-center gap-4" onSubmit={handlerSubmit}>
         <h1 className="text-3xl text-gray-500 w-full text-center mb-4">Sing up</h1>

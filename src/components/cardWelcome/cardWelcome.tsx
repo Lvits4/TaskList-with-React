@@ -1,12 +1,11 @@
 import { FC } from "react";
-import { tpDataRegister } from "../../types/tpDataRegister/tpDataRegister";
 
 interface CardWelcomeProps{
-  dataRegister: tpDataRegister
+  nameUser: string
 }
 
 
-const CardWelcome:FC<CardWelcomeProps> = ({dataRegister}) => {
+const CardWelcome:FC<CardWelcomeProps> = ({nameUser}) => {
   return (
     <div className="bg-white w-[35rem] h-[20rem] rounded-xl flex relative items-center p-4">
       <img
@@ -15,7 +14,7 @@ const CardWelcome:FC<CardWelcomeProps> = ({dataRegister}) => {
       ></img>
       <div className="flex flex-col indent-8">
         <h1 className="text-gray-400 text-5xl">Hello,</h1>
-        <h1 className="text-gray-400 text-5xl">{dataRegister.name}!</h1>
+        <h1 className="text-gray-400 text-5xl">{nameUser}!</h1>
       </div>
     </div>
   );
