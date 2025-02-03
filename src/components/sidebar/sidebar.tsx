@@ -5,27 +5,22 @@ import { MdClose } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
 import { MdDeleteOutline as Delete } from "react-icons/md";
 import { getDataLocal } from "../../services/getDataLocal";
-import { getDataSession } from "../../services/getDataSession";
 
 
 
 interface SidebarProps {
 
     editNote: tpNote;
-    setEditNote: (editNote: tpNote) => void;
-    validateNewNote?: tpValidateNote;
-    setValidateNewNote?: (validateNewNote: tpValidateNote) => void;
-    setShowSidebar: (arg: boolean) => void;
-    setBackgroundImage: (arg: string) => void;
+    setEditNote: (editNote: tpNote) => void
+    validateNewNote?: tpValidateNote
+    setValidateNewNote?: (validateNewNote: tpValidateNote) => void
+    setShowSidebar: (arg: boolean) => void
     notes: tpNote[]
-    backgroundImage: string
 }
 
 
 
 const Sidebar: FC<SidebarProps> = ({
-    backgroundImage,
-    setBackgroundImage,
     editNote,
     setEditNote,
     setShowSidebar,
@@ -41,7 +36,6 @@ const Sidebar: FC<SidebarProps> = ({
     }
 
     const handlerBackgroundImage = (arg: string) => {
-        setBackgroundImage(arg)
         handlerChange('background', arg)
     }
 
@@ -72,9 +66,6 @@ const Sidebar: FC<SidebarProps> = ({
 
             if (index !== -1) {
                 notes[indexNote] = { ...notes[indexNote], ...editNote }
-
-                const background = notes[indexNote].background
-                setBackgroundImage(background)
 
                 if (user) {
                     user['notes'] = [...notes]
@@ -126,9 +117,9 @@ const Sidebar: FC<SidebarProps> = ({
                     className="absolute right-[-0.5rem] top-[-4.5rem] text-white w-7 h-7 hover:cursor-pointer"
                     onClick={handlerHiddenSidebar} />
             </div>
-            <input style={{ backgroundImage: `url(${backgroundImage})` }} className="bg-white w-full rounded-lg h-9 focus:outline-none px-5 placeholder:text-xl text-gray-500"
+            <input style={{ backgroundImage: `url(${editNote.background})` }} className="bg-white w-full rounded-lg h-9 focus:outline-none px-5 placeholder:text-xl text-gray-500"
                 value={editNote.title} onChange={(e) => handlerChange('title', e.target.value)}></input>
-            <textarea style={{ backgroundImage: `url(${backgroundImage})` }}
+            <textarea style={{ backgroundImage: `url(${editNote.background})` }}
                 className="bg-white w-full rounded-lg h-[20rem] p-5 focus:outline-none placeholder:text-xl pt-4 text-gray-500 resize-none" value={editNote.description} onChange={(e) => handlerChange('description', e.target.value)}></textarea>
             <CarouselBackground handlerBackgroundImage={handlerBackgroundImage} />
             <div className="flex gap-6 justify-center w-full items-center text-white mt-4">

@@ -3,14 +3,10 @@ import BtnOpenModal from "../../../components/btnOpenModal/btnOpenModal"
 import FormAddNote from "../../../components/formAddNote/formAddNote"
 import SearchInputReactPrime from "../../../components/searchInput/searchInput"
 import { tpNote, tpValidateNote } from "../../../types/tpNote/tpNote"
-import { useLocation } from "react-router-dom"
 import CardNotes from "../../../components/cardNotes/cardNotes"
 import CardWelcome from "../../../components/cardWelcome/cardWelcome"
 import Sidebar from "../../../components/sidebar/sidebar"
 import { getDataSession } from "../../../services/getDataSession"
-
-
-
 
 
 const Inicio = () => {
@@ -19,7 +15,6 @@ const Inicio = () => {
     const [showModal, setShowModal] = useState<boolean>(false)
     const [showSidebar, setShowSidebar] = useState<boolean>(false)
     const [nameUser, setNameUser] = useState<string>('')
-    const [backgroundImage, setBackgroundImage] = useState<string>('')
     const [notes, setNotes] = useState<tpNote[]>([]);
     const [editNote, setEditNote] = useState<tpNote>({
         id: 0,
@@ -35,20 +30,20 @@ const Inicio = () => {
 
 
     useEffect(() => {
-        const data = getDataSession('users') as unknown as Partial<{notes:[], name:string}>
+        const data = getDataSession('users') as unknown as Partial<{ notes: [], name: string }>
         let arrNotes: [] = []
         let nameUser: string = ''
 
-            if (data ) {
-                arrNotes = data.notes ?? []
-                nameUser = data.name ?? ''
-                setNameUser(nameUser)
-                arrNotes ? setNotes(arrNotes) : null
-            } else {
-                console.log("No hay notas válidas en el arreglo.");
-            }
+        if (data) {
+            arrNotes = data.notes ?? []
+            nameUser = data.name ?? ''
+            setNameUser(nameUser)
+            arrNotes ? setNotes(arrNotes) : null
+        } else {
+            console.log("No hay notas válidas en el arreglo.");
+        }
 
-    }, [notes.length, showModal, showSidebar, backgroundImage])
+    }, [notes.length, showModal, showSidebar])
 
 
     const filterNotes = (id: number) => {
@@ -57,10 +52,8 @@ const Inicio = () => {
     }
 
     return <div className="bg-[#E2D2FE] w-full h-full flex items-center justify-center relative overflow-y-scroll">
-        <SearchInputReactPrime />
+        <SearchInputReactPrime notes={notes} />
         {showModal && <FormAddNote
-        backgroundImage={backgroundImage}
-        setBackgroundImage={setBackgroundImage}
             notes={notes}
             setNotes={setNotes}
             validateNewNote={validateNewNote}
@@ -74,7 +67,7 @@ const Inicio = () => {
 
             <div className="flex w-full px-8 justify-center absolute top-25 pb-7 flex-wrap gap-8">
                 {notes.map((item) => {
-                    
+
                     const { id } = item
                     return <CardNotes
                         setSelectedId={(arg) => filterNotes(arg)}
@@ -90,8 +83,6 @@ const Inicio = () => {
 
         {showSidebar && <Sidebar
             notes={notes}
-            backgroundImage={backgroundImage}
-            setBackgroundImage={setBackgroundImage}
             editNote={editNote}
             setEditNote={setEditNote}
             setShowSidebar={setShowSidebar} />}
