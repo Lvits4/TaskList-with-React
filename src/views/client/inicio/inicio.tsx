@@ -15,7 +15,8 @@ const Inicio = () => {
     const [showModal, setShowModal] = useState<boolean>(false)
     const [showSidebar, setShowSidebar] = useState<boolean>(false)
     const [nameUser, setNameUser] = useState<string>('')
-    const [notes, setNotes] = useState<tpNote[]>([]);
+    const [notes, setNotes] = useState<tpNote[]>([])
+    const [notesFilter, setNotesFilter] = useState<any>([])
     const [editNote, setEditNote] = useState<tpNote>({
         id: 0,
         title: '',
@@ -27,6 +28,7 @@ const Inicio = () => {
         title: false,
         description: false,
     })
+
 
 
     useEffect(() => {
@@ -43,6 +45,8 @@ const Inicio = () => {
             console.log("No hay notas válidas en el arreglo.");
         }
 
+        setNotesFilter(notes)
+
     }, [notes.length, showModal, showSidebar])
 
 
@@ -51,8 +55,8 @@ const Inicio = () => {
         item ? setEditNote(item) : null
     }
 
-    return <div className="bg-[#E2D2FE] w-full h-full flex items-center justify-center relative overflow-y-scroll">
-        <SearchInputReactPrime notes={notes} />
+    return <div className="bg-[#E2D2FE] w-full h-full flex items-center justify-center relative overflow-y-auto">
+        <SearchInputReactPrime notes={notes} setNotesFilter={setNotesFilter}/>
         {showModal && <FormAddNote
             notes={notes}
             setNotes={setNotes}
@@ -66,7 +70,7 @@ const Inicio = () => {
             </div>
 
             <div className="flex w-full px-8 justify-center absolute top-25 pb-7 flex-wrap gap-8">
-                {notes.map((item) => {
+                {notesFilter.map((item:any) => {
 
                     const { id } = item
                     return <CardNotes
