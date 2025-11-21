@@ -3,14 +3,13 @@ import CarouselBackground from "../carouselBackground/carouselBackground"
 import BtnGeneric from "../btnGeneric/btnGeneric"
 import { tpNote, tpValidateNote } from "../../types/tpNote/tpNote"
 import { setDataLocal } from "../../services/setDataLocal"
+import {toast }from "react-hot-toast"
 
 
 interface FormAddNoteProps {
     validateNewNote: tpValidateNote
     setValidateNewNote: (validateNewNote: tpValidateNote) => void
     setShowModal: (arg: boolean) => void
-    setNotes: (arg: tpNote[]) => void
-    notes: tpNote[]
 }
 
 
@@ -61,6 +60,7 @@ const FormAddNote: FC<FormAddNoteProps> = ({
         if (allInputsValid) {
             setDataLocal('users', newNote, 'note')
             setShowModal(false)
+            toast.success('La nota ha sido creada exitosamente!')
 
         } else {
             console.log('No funciono')
@@ -75,8 +75,8 @@ const FormAddNote: FC<FormAddNoteProps> = ({
             <textarea style={{ backgroundImage: `url(${newNote.background})` }} className="bg-white resize-none rounded-lg w-full h-[16rem] border-2 border-[#E2D2FE] focus:outline-none p-5 placeholder:text-xl pt-4 text-gray-500" placeholder="Description" onChange={(e) => handlerChange('description', e.target.value)}></textarea>
             <CarouselBackground handlerBackgroundImage={handlerBackgroundImage} />
             <div className="flex w-full justify-around items-center text-white">
-                <BtnGeneric label='Cancelar' handlerClick={handlerHiddenModal} />
-                <BtnGeneric label='Aceptar' type='submit' />
+                <BtnGeneric label='Cancel' handlerClick={handlerHiddenModal} />
+                <BtnGeneric label='Accept' type='submit' />
             </div>
 
         </form>

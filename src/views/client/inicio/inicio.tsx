@@ -27,6 +27,7 @@ const Inicio = () => {
     const [validateNewNote, setValidateNewNote] = useState<tpValidateNote>({
         title: false,
         description: false,
+        
     })
 
 
@@ -58,8 +59,6 @@ const Inicio = () => {
     return <div className="bg-[#E2D2FE] w-full h-full flex items-center justify-center relative overflow-y-auto">
         <SearchInputReactPrime notes={notes} setNotesFilter={setNotesFilter}/>
         {showModal && <FormAddNote
-            notes={notes}
-            setNotes={setNotes}
             validateNewNote={validateNewNote}
             setValidateNewNote={setValidateNewNote}
             setShowModal={setShowModal} />}

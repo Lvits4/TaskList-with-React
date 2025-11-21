@@ -5,6 +5,7 @@ import { MdClose } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
 import { MdDeleteOutline as Delete } from "react-icons/md";
 import { getDataLocal } from "../../services/getDataLocal";
+import toast from "react-hot-toast";
 
 
 
@@ -74,6 +75,8 @@ const Sidebar: FC<SidebarProps> = ({
 
                 localStorage.setItem('users', JSON.stringify(element))
                 sessionStorage.setItem('users', JSON.stringify(user))
+                toast.success('La nota ha sido editada exitosamente!')
+
             }
 
         }
@@ -102,6 +105,8 @@ const Sidebar: FC<SidebarProps> = ({
 
                 localStorage.setItem('users', JSON.stringify(element))
                 sessionStorage.setItem('users', JSON.stringify(user))
+                toast.success('La nota ha sido borrada exitosamente!')
+
             }
 
         }
@@ -124,10 +129,10 @@ const Sidebar: FC<SidebarProps> = ({
             <CarouselBackground handlerBackgroundImage={handlerBackgroundImage} />
             <div className="flex gap-6 justify-center w-full items-center text-white mt-4">
                 <button className='flex justify-center w-[40%] items-center gap-2 bg-[#E2D2FE] px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#9c7cd4]' onClick={handlerDelete}>
-                    <Delete className="text-xl" />Borrar
+                    <Delete className="text-xl" />Delete
                 </button>
                 <button className='flex justify-center w-[40%] items-center gap-2 bg-[#E2D2FE] px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#9c7cd4]' type="submit">
-                    <FaCheck className="text-xl" /> Guardar
+                    <FaCheck className="text-xl" /> Save
                 </button>
             </div>
         </form>

@@ -17,8 +17,7 @@ const SearchInputReactPrime: FC<SearchInputReactPrimeProps> = ({ notes, setNotes
 
     const handlerInput: FocusEventHandler<HTMLInputElement> = (e) => {
         const valueInput = e.target.value.trim();
-
-        if (valueInput) {
+        if (!valueInput) {
             setNotesFilter(notes);
         }
     };

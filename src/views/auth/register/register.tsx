@@ -7,6 +7,7 @@ import { setDataLocal } from '../../../services/setDataLocal';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import toast from 'react-hot-toast';
 
 // Esquema de validación con Yup
 const schema = yup.object({
@@ -37,6 +38,7 @@ const Register = () => {
 
         if (setDataLocal('users', dataRegister, 'user')) {
             sessionStorage.setItem('users', JSON.stringify(dataRegister));
+            toast.success('Usuario registrado!')
             navigate('/home/inicio');
         } else {
             console.log('No funcionó');
@@ -50,8 +52,7 @@ const Register = () => {
         id: Math.random() * 100,
         notes: []
     });
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
-    const [validateConfirmPassword, setValidateConfirmPassword] = useState<boolean>(false);
+
     const [validateRegister, setValidateRegister] = useState<tpValidateRegister>({
         name: false,
         email: false,
@@ -69,16 +70,6 @@ const Register = () => {
             setValidateRegister({ ...validateRegister, [key]: true });
         } else {
             setValidateRegister({ ...validateRegister, [key]: false });
-        }
-    };
-
-    const handlerChangeConfirmPassword = (arg: string) => {
-        setConfirmPassword(arg);
-
-        if (arg.trim() !== '') {
-            setValidateConfirmPassword(true);
-        } else {
-            setValidateConfirmPassword(false);
         }
     };
 
@@ -130,15 +121,15 @@ const Register = () => {
                     classElement={`bg-white text-gray-500 rounded-lg h-10 p-2 w-full focus:outline-none ${errors.confirmPassword ? 'border-red-500 shadow-red-500 border-[1px]' : ''}`}
                     handlerChange={(arg) => {
                         setValue('confirmPassword', arg, { shouldValidate: true });
-                        handlerChangeConfirmPassword(arg);
+                        /* handlerChangeConfirmPassword(arg); */
                     }}
                 />
                 <p className="text-red-500 text-xs mt-2" style={{ minHeight: '20px' }}>{errors.confirmPassword ? errors.confirmPassword.message : ' '}</p>
             </div>
 
             <div className="flex items-center justify-between text-gray-500 text-sm gap-2 hover:cursor-pointer">
-                <span>Ya tienes cuenta?</span>
-                <span className="text-blue-500 hover:text-blue-600" onClick={() => handlerNavigate('/login')}>Inicia sesión aquí</span>
+                <span>Do you already have an account?</span>
+                <span className="text-blue-500 hover:text-blue-600" onClick={() => handlerNavigate('/login')}>Sing in here</span>
             </div>
 
             <button className='bg-[#9c7cd4] w-full mt-8 text-white px-8 py-2 rounded-lg hover:cursor-pointer transition-all duration-200 hover:bg-[#8669b8]'>
